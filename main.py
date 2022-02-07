@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 import time
 import pandas as pd
+import os
 
 
 def get_content(urls):
@@ -20,8 +21,7 @@ def get_content(urls):
             names.append('Not Found')
 
         try:
-            link = driver.find_element(By.XPATH, '//*[@id="layoutPage"]/div[1]/div[3]/div[2]/div[2]/div[2]'
-                                                 '/div/div/div/div[1]/div[1]/a').get_attribute('href')
+            link = driver.find_element(By.CLASS_NAME, 'h1k').get_attribute('href')
             links.append(link)
         except NoSuchElementException:
             links.append('Not Found')
@@ -31,6 +31,7 @@ def get_content(urls):
 
 def main():
     df = pd.read_excel('input.xlsx', sheet_name='Лист1')
+    os.remove('out.csv')
     articles = df['article'].to_list()
     urls = ['https://www.ozon.ru/search/?from_global=true&text=' + art for art in articles]
 
@@ -47,4 +48,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-# TODO по-разному показываются элементы - разные классы у тегов. Обобщить
+#  TODO по-разному показываются элементы - разные классы у тегов. Обобщить
