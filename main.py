@@ -31,7 +31,10 @@ def get_content(urls):
 
 def main():
     df = pd.read_excel('input.xlsx', sheet_name='Лист1')
-    os.remove('out.csv')
+    try:
+        os.remove('out.csv')
+    except:
+        pass
     articles = df['article'].to_list()
     urls = ['https://www.ozon.ru/search/?from_global=true&text=' + art for art in articles]
 
