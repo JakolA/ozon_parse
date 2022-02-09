@@ -4,6 +4,7 @@ from selenium.common.exceptions import *
 import time
 import pandas as pd
 import os
+from tkinter import messagebox
 
 
 def get_content(urls):
@@ -32,7 +33,7 @@ def get_content(urls):
 def main():
     df = pd.read_excel('input.xlsx', sheet_name='Лист1')
     try:
-        os.remove('out.csv')
+        os.remove('out.xlsx')
     except:
         pass
     articles = df['article'].to_list()
@@ -43,12 +44,12 @@ def main():
 
     df['name'], df['code'] = names, codes
 
-    df.to_csv('out.csv')
+    df.to_excel('out.xlsx')
+
+    messagebox.showinfo('Сообщение', 'Данные успешно загружены в файл \"out.xlsx\"')
 
     return None
 
 
 if __name__ == '__main__':
     main()
-
-#  TODO по-разному показываются элементы - разные классы у тегов. Обобщить
